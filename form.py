@@ -1,26 +1,36 @@
-import tkinter as tk
+from flask import Flask, request, render_template_string
 
-def bienvenida():
-    nombre = entry_nombre.get()
-    if nombre:
-        label_mensaje.config(text=f"¡Bienvenido, {nombre}!")
-    else:
-        label_mensaje.config(text="Error")
+app = Flask(__name__)
 
-root = tk.Tk()
-root.title("Formulario de Usuario")
-root.geometry("400x100")
+# Plantilla HTML para el formulario
+html_form = """
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Bienvenida</title>
+</head>
+<body>
+    <h1>Formulario de Bienvenida</h1>
+    <form action="/" method="POST">
+        <label for="nombre">Ingrese su nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+        <button type="submit">Enviar</button>
+    </form>
+    {% if nombre %}
+        <h2>¡Bienvenido/a, {{ nombre }}!</h2>
+    {% endif %}
+</body>
+</html>
+"""
 
-label_instruccion = tk.Label(root, text="Ingrese su nombre, por favor:", font=("Courier", 14))
-label_instruccion.pack(pady=10)
+@app.route("/", methods=["GET", "POST"])
+def formulario():
+    nombre = None
+    if request.method == "POST":
+        nombre = request.form.get("nombre")
+    return render_template_string(html_form, nombre=nombre)
 
-entry_nombre = tk.Entry(root, font=("Courier", 14))
-entry_nombre.pack(pady=5)
-
-boton_bienvenida = tk.Button(root, text="Entrar", font=("Courier", 12), command=bienvenida)
-boton_bienvenida.pack(pady=10)
-
-label_mensaje = tk.Label(root, text="", font=("Courier", 14), fg="black")
-label_mensaje.pack(pady=10)
-
-root.mainloop()
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
