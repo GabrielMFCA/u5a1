@@ -9,17 +9,17 @@ html_form = """
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Bienvenida</title>
+    <title>Formulario acceso al usuario</title>
 </head>
 <body>
-    <h1>Formulario de Bienvenida</h1>
+    <h1>Bienvenida</h1>
     <form action="/" method="POST">
         <label for="nombre">Ingrese su nombre:</label>
         <input type="text" id="nombre" name="nombre" required>
         <button type="submit">Enviar</button>
     </form>
     {% if nombre %}
-        <h2>¡Bienvenido/a, {{ nombre }}!</h2>
+        <h2>¡Bienvenido, {{ nombre }}!</h2>
     {% endif %}
 </body>
 </html>
