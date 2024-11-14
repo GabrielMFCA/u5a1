@@ -2,7 +2,6 @@ from flask import Flask, request, render_template_string
 
 app = Flask(__name__)
 
-# Plantilla HTML para el formulario
 html_form = """
 <!doctype html>
 <html lang="es">
